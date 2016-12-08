@@ -9,15 +9,17 @@ interface IPeople {
 interface IPeopleData {
     people: IPeople[];
     headers?: string[];
-    pagingData?: IPagerProps;
+    pagingData?: IPagerProps
 }
 interface IAppState {
     headers: string[];
+    pagingData?: IPagerProps;
 }
 
 class App extends React.Component<IPeopleData, IAppState> {
     constructor(props: IPeopleData) {
         super(props);
+        console.log(props);
         this.state = {
             headers: Object.keys(props.people[0] || {})
         };

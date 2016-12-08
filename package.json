@@ -4,6 +4,8 @@
   "description": "React Grid a data grid written in react",
   "main": "gulpfile.js",
   "dependencies": {
+    "gulp": "^3.9.1",
+    "gulp-react": "^3.1.0",
     "react-tools": "^0.13.3"
   },
   "devDependencies": {},

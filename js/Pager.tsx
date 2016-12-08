@@ -5,6 +5,7 @@ interface IPagerProps {
 
 class Pager extends React.Component<IPagerProps, any> {
     goToPage(pageIndex: number) {
+        console.log('going to page', pageIndex);
         paginate = navigateToPage(pageIndex);
         refresh();
     }

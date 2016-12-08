@@ -1,7 +1,8 @@
 {
     "compilerOptions": {
         "module": "none",
-        "target": "es5"
+        "target": "es5",
+        "jsx": "react"
     },
     "exclude": [
         "node_modules/",

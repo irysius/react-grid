@@ -7,7 +7,7 @@ class Table extends React.Component<IPeopleData, any> {
         let rows = this.props.people.map(person => {
             return <div key={person.id}>{person.first_name}</div>;
         });
-        return <div>
+        return <div className="container">
             <div>
                 {rowHeader}
             </div>

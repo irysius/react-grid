@@ -9,7 +9,7 @@
         "definitions/"
     ],
     "include": [
-        "./typings/index.d.ts",
+        "./index.d.ts",
         "./**/*.ts",
         "./**/*.tsx"
     ]

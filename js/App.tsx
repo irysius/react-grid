@@ -8,7 +8,7 @@ interface IPeople {
 }
 interface IPeopleData {
     people: IPeople[];
-    [others: string]: any;
+    headers?: string[];
 }
 interface IAppState {
     headers: string[];

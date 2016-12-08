@@ -3,7 +3,7 @@ class Table extends React.Component<IPeopleData, any> {
         super(props);
     }
     render() {
-        console.log(this.props['headers']);
+        console.log(this.props.headers);
         let rowHeader = <span>Row Header Placeholder</span>;
         let rows = this.props.people.map(person => {
             return <Row key={person.id} {...person} />;

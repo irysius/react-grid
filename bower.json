@@ -1,0 +1,19 @@
+{
+  "name": "react-grid",
+  "description": "React Grid a data grid written in react",
+  "main": "gulpfile.js",
+  "license": "ISC",
+  "homepage": "https://github.com/irysius/react-grid",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "axios": "^0.15.3",
+    "react": "^15.4.1"
+  }
+}

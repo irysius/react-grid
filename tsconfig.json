@@ -1,0 +1,15 @@
+{
+    "compilerOptions": {
+        "module": "none",
+        "target": "es5"
+    },
+    "exclude": [
+        "node_modules/",
+        "bower_components/",
+        "definitions/"
+    ],
+    "include": [
+        "./typings/index.d.ts",
+        "./**/*.ts"
+    ]
+}

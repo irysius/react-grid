@@ -26,8 +26,8 @@
             let currentPageIndex = 0;
             let getPage = pager(pageSize);
             let peopleData = [];
-            
-            let filter, sort, paginate;
+
+            let filter, sort, paginate = navigateToPage(0);
 
             // On initial load
             axios.get('./data/simple-rows.json').then(function (response) {
@@ -39,10 +39,13 @@
                 let data = {
                     people: peopleData
                 };
-                
+                console.log('start');
                 data = filter ? filter(data) : data;
+                console.log(data.people.length);
                 data = sort ? sort(data) : data;
+                console.log(data.people.length);
                 data = paginate ? paginate(data) : data;
+                console.log(data.people.length);
                 
                 render(data);
             }

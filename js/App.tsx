@@ -18,12 +18,19 @@ class App extends React.Component<IPeopleData, IAppState> {
     constructor(props: IPeopleData) {
         super(props);
         this.state = {
-            headers: Object.keys(props.people[0] || {}) 
+            headers: Object.keys(props.people[0] || {})
         };
     }
     render() {
         return <Table {...this.props} headers={this.state.headers}/>;
     }
+}
+
+function updateHeaderState(columns: string[], currSortCol: string, prevSortCol: string) {
+    console.log("now sorting: " + currSortCol + " | previously sorting: " + prevSortCol + "\n");
+
+    sortData(data.people, currSortCol, (currSortCol == prevSortCol));
+    
 }
 
 function sortData(data: IPeople[], columnName: string, descending: boolean) {

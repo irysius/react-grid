@@ -3,7 +3,7 @@ interface IPeople {
     first_name: string;
     last_name: string;
     email: string;
-    gender: 'Male'|'Female';
+    gender: string;
     ip_address: string;
 }
 interface IPeopleData {

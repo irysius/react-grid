@@ -22,7 +22,10 @@ class App extends React.Component<IPeopleData, IAppState> {
         };
     }
     render() {
-        return <Table {...this.props} headers={this.state.headers}/>;
+        return <div>
+            <SearchTextbox />
+            <Table {...this.props} headers={this.state.headers}/>
+        </div>;
     }
 }
 

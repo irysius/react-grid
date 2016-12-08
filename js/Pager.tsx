@@ -1,18 +1,83 @@
 interface IPagerProps {
     currentPageIndex: number;
     numberOfPages: number;
+    maxVisiblePages?: number;
 }
 
 class Pager extends React.Component<IPagerProps, any> {
     goToPage(pageIndex: number) {
-        console.log('going to page', pageIndex);
         paginate = navigateToPage(pageIndex);
         refresh();
     }
 
     render() {
-        console.log(this.props);
-        let pages = _.times(this.props.numberOfPages).map((index) => {
+        let setLength = this.props.maxVisiblePages || 5;
+        let prevButton = (function () {
+            if (this.props.currentPageIndex <= 0) {
+                return <li className="disabled">
+                    <a href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>;
+            } else {
+                return <li>
+                    <a href="#" aria-label="Previous" onClick={this.goToPage.bind(this, this.props.currentPageIndex - 1)}>
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>;
+            }
+        }.bind(this))();
+        let prevSetButton = (function () {
+            if (this.props.currentPageIndex - setLength < 0) {
+                return null;
+            } else {
+                return <li>
+                    <a href="#" aria-label="Previous Set" onClick={this.goToPage.bind(this, this.props.currentPageIndex - setLength)}>
+                        <span aria-hidden="true">&hellip;</span>
+                    </a>
+                </li>;
+            }
+        }.bind(this))();
+        let nextButton = (function () {
+            if (this.props.currentPageIndex >= this.props.numberOfPages - 1) {
+                return <li className="disabled">
+                    <a href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>;
+            } else {
+                return <li>
+                    <a href="#" aria-label="Next" onClick={this.goToPage.bind(this, this.props.currentPageIndex + 1)}>
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>;
+            }
+        }.bind(this))();
+        let nextSetButton = (function () {
+            if (this.props.currentPageIndex + setLength > this.props.numberOfPages - 1) {
+                return null;
+            } else {
+                return <li>
+                    <a href="#" aria-label="Next Set" onClick={this.goToPage.bind(this, this.props.currentPageIndex + 1 + setLength)}>
+                        <span aria-hidden="true">&hellip;</span>
+                    </a>
+                </li>;
+            }
+        }.bind(this))();
+
+        let pageSet = null;
+        _.chunk(_.times(this.props.numberOfPages), setLength).some(set => {
+            let first = set[0]
+            let last = set[set.length - 1];
+            if (first <= this.props.currentPageIndex && this.props.currentPageIndex <= last) {
+                pageSet = set;
+                return true;
+            } else {
+                return false;
+            }
+        });
+        console.log(pageSet);
+        let pages = pageSet.map((index) => {
             return <li key={index}
                 className={index === this.props.currentPageIndex ? "active" : null}>
                 <a href="#" onClick={this.goToPage.bind(this, index)}>{index + 1}</a>
@@ -22,17 +87,11 @@ class Pager extends React.Component<IPagerProps, any> {
         return (
             <nav aria-label="Page navigation">
             <ul className="pagination">
-                <li className={this.props.currentPageIndex <= 0 ? "disabled" : null}>
-                    <a href="#" aria-label="Previous" onClick={this.goToPage.bind(this, this.props.currentPageIndex - 1)}>
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                </li>
+                { prevButton }
+                { prevSetButton }
                 { pages }
-                <li className={this.props.currentPageIndex >= this.props.numberOfPages - 1 ? "disabled" : null }>
-                    <a href="#" aria-label="Next" onClick={this.goToPage.bind(this, this.props.currentPageIndex + 1)}>
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                </li>
+                { nextSetButton }
+                { nextButton }
             </ul>
             </nav>
         );

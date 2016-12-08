@@ -39,13 +39,10 @@
                 let data = {
                     people: peopleData
                 };
-                // console.log('start');
+
                 data = filter ? filter(data) : data;
-                // console.log(data.people.length);
                 data = sort ? sort(data) : data;
-                // console.log(data.people.length);
                 data = paginate ? paginate(data) : data;
-                // console.log(data.people.length);
                 
                 render(data);
             }

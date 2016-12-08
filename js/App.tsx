@@ -19,7 +19,6 @@ interface IAppState {
 class App extends React.Component<IPeopleData, IAppState> {
     constructor(props: IPeopleData) {
         super(props);
-        console.log(props);
         this.state = {
             headers: Object.keys(props.people[0] || {})
         };

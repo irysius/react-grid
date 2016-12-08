@@ -1,14 +1,33 @@
 var gulp = require('gulp');
+var exec = require('child_process').exec;
+var browserSync = require('browser-sync').create();
+var reload = browserSync.reload;
 
-var react = require('gulp-react');
 
-gulp.task('compile-jsx', function() {
-	gulp.src(['/jsx/**/*.jsx'])
-		.pipe(react())
-        .pipe(gulp.dest('/js'));
+gulp.task('compile', function(done) {
+	exec('tsc', (err, stdout, stderr) => {
+        console.log(stdout);
+        console.log(stderr);
+        done(err);
+    });
 });
 
-gulp.task('default', function() {
+gulp.task('serve', function () {
+	browserSync.init({
+        notify: false,
+        // Customize the BrowserSync console logging prefix
+        // logPrefix: 'SERVE',
+        // Run as an https by uncommenting 'https: true'
+        // Note: this uses an unsigned certificate which on first access
+        //       will present a certificate warning in the browser.
+        // https: true,
+        startPath: 'index.html',
+        server: {
+            baseDir: './'
+        }
+    });
 
-	gulp.watch(['/jsx/**/*.jsx'], ['compile-jsx']);
+    gulp.watch(['./js/**/*.tsx', './js/**/*.ts'], ['compile', reload]);
 });
+
+gulp.task('default', ['serve']);

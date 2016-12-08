@@ -1,6 +1,6 @@
-class App extends __React.Component<any, any> {
+class App extends React.Component<any, any> {
     render() {
-        return (<div>{this.props.name}</div>);
+        return (<div>Hello, {this.props.name} stuff</div>);
     }
 
 }

@@ -5,7 +5,10 @@ var reload = browserSync.reload;
 
 
 gulp.task('compile', function(done) {
-	exec('tsc', (err, stdout, stderr) => {
+    var isWin = /^win/.test(process.platform);
+    var cmd = isWin ? 'tsc' : 'sh ./tsc.sh';
+
+	exec(cmd, (err, stdout, stderr) => {
         console.log(stdout);
         console.log(stderr);
         done(err);

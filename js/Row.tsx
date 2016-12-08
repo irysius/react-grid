@@ -5,14 +5,14 @@
 class Row extends React.Component<IPeople, any> {
     render() {
         return (
-            <tr>
-                <td>{this.props.id}</td>
-                <td>{this.props.first_name}</td>
-                <td>{this.props.last_name}</td>
-                <td>{this.props.email}</td>
-                <td>{this.props.gender}</td>
-                <td>{this.props.ip_address}</td>
-            </tr>
+            <div class="row">
+                <div class="col-md-1">{this.props.id}</div>
+                <div class="col-md-2">{this.props.first_name}</div>
+                <div class="col-md-2">{this.props.last_name}</div>
+                <div class="col-md-3">{this.props.email}</div>
+                <div class="col-md-1">{this.props.gender}</div>
+                <div class="col-md-3">{this.props.ip_address}</div>
+            </div>
         )
     }
 }

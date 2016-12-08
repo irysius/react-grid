@@ -3,8 +3,11 @@
         <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="/css/site.css" />
         <script src="/bower_components/axios/dist/axios.js"></script>
+        <script src="/bower_components/lodash/dist/lodash.js"></script>
         <script src="/bower_components/react/react.js"></script>
         <script src="/bower_components/react/react-dom.js"></script>
+        <script src="/js/SearchTextbox.js"></script>
+        <script src="/js/Pager.js"></script>
         <script src="/js/RowHeader.js"></script>
         <script src="/js/Row.js"></script>
         <script src="/js/Table.js"></script>
@@ -25,6 +28,10 @@
             // On initial load
             axios.get('./data/simple-rows.json').then(function (response) {
                 data.people = response.data;
+                data.pagingData = {
+                    currentPageIndex: 0,
+                    numberOfPages: 10
+                };
                 render(data);
             });
         </script>

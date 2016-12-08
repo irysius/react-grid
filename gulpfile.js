@@ -30,7 +30,7 @@ gulp.task('serve', function () {
         }
     });
 
-    gulp.watch(['./js/**/*.tsx', './js/**/*.ts'], ['compile', reload]);
+    gulp.watch(['./js/**/*.tsx', './js/**/*.ts', './index.html', './css/**/*.css'], ['compile', reload]);
 });
 
 gulp.task('default', ['serve']);

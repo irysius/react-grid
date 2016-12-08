@@ -4,6 +4,6 @@
 .row:nth-child(odd){
   background-color: #aaaaaa;
 }
-.header-row {
+.row.header-row {
     background-color: lightblue;
 }

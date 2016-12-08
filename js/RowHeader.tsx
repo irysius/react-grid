@@ -1,12 +1,26 @@
-class RowHeader extends React.Component<IAppState, any> {
+interface IRowHeaderState {
+    prevSortColumn: string;
+}
+
+class RowHeader extends React.Component<IAppState, IRowHeaderState> {
+    constructor(props) {
+        super(props);
+        this.state = {
+            prevSortColumn: ''
+        };
+    }
+
+    sort(columnName: string) {
+
+    }
+
     render() {
-        return <div className="header-row">
-            <div className="col-md-1">{this.props.headers[0]}</div>
-            <div className="col-md-2">{this.props.headers[1]}</div>
-            <div className="col-md-2">{this.props.headers[2]}</div>
-            <div className="col-md-3">{this.props.headers[3]}</div>
-            <div className="col-md-1">{this.props.headers[4]}</div>
-            <div className="col-md-3">{this.props.headers[5]}</div>
+        let classNames = ['col-md-1', 'col-md-2', 'col-md-2', 'col-md-3', 'col-md-1', 'col-md-3'];
+        let headerCells = classNames.map((className, index) => {
+            return <div key={index} className={className} onClick={this.sort.bind(this, this.props.headers[index])}>{this.props.headers[index]}</div>
+        });
+        return <div className="row header-row">
+            { headerCells }
         </div>
     }
 }

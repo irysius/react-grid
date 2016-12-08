@@ -21,11 +21,12 @@
             }
             
             let data = { };
+
+            // On initial load
             axios.get('./data/simple-rows.json').then(function (response) {
                 data.people = response.data;
                 render(data);
             });
-            
         </script>
     </body>
 </html>

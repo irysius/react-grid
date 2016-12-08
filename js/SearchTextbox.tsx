@@ -3,13 +3,15 @@ interface ISearchTextbox {
     filterDebounced: Function;
 }
 interface ISearchTextboxState {
-    searchTerm: string;
+    searchTerm?: string;
+    searchColumn?: string;
 }
-class SearchTextbox extends React.Component<IAppState, ISearchTextboxState> implements ISearchTextbox {
+class SearchTextbox extends React.Component<any, ISearchTextboxState> implements ISearchTextbox {
     constructor(props) {
         super(props);
         this.state = {
-            searchTerm: ''
+            searchTerm: '',
+            searchColumn: this.props.headers[0]
         };
         // http://stackoverflow.com/questions/23123138/perform-debounce-in-react-js/24679479#24679479
         this.filterDebounced = _.debounce(function () {
@@ -19,20 +21,35 @@ class SearchTextbox extends React.Component<IAppState, ISearchTextboxState> impl
 
     filterDebounced;
     filter(searchTerm: string) {
-        
+        filter = updateFilterState(this.state.searchTerm, this.state.searchColumn);
+
+        refresh();
     }
 
     onChange(event) {
-        this.setState({ searchTerm: event.target.value });
+        this.setState({ 
+            searchTerm: event.target.value
+        });
         this.filterDebounced();
     }
 
+    onSelect(event) {
+        this.setState({
+            searchColumn: event.target.value
+        });
+    }
+
     render() {
+        var options = this.props.headers.map(function(header, index) {
+            return <option key={index}>{header}</option>
+        });
+
         return <div>
             <input type="text" value={this.state.searchTerm} onChange={this.onChange.bind(this)} />
-            <select>
-                <option>id</option>
+            <select onChange={this.onSelect.bind(this)}>
+                {options}
             </select>
+            <button onClick={this.filter.bind(this)}>Search</button>
         </div>;
     }
 }

@@ -42,6 +42,13 @@ function updateHeaderState(columns: string[], currSortCol: string, prevSortCol: 
     };
 }
 
+function updateFilterState(searchTerm: string, searchColumn: string) {
+    return function (data: IPeopleData) {
+        data.people = filterData(data.people, fullStringMatch(searchTerm, searchColumn));
+        return data;
+    }
+}
+
 function sortData(data: IPeople[], columnName: string, descending: boolean) {
     let order = descending ? 'desc' : 'asc';
     return _.orderBy(data, columnName, order);
@@ -53,7 +60,7 @@ function filterData(data: IPeople[], condition: (p: IPeople) => boolean) {
 
 function fullStringMatch(searchTerm: string, columnName: string) {
     return function (p: IPeople) {
-        return p[columnName].toLowerCase() === searchTerm.toLowerCase();
+        return ('' + p[columnName]).toLowerCase() === searchTerm.toLowerCase();
     };
 }
 

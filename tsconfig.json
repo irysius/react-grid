@@ -6,11 +6,11 @@
     },
     "exclude": [
         "node_modules/",
-        "bower_components/",
         "definitions/"
     ],
     "include": [
         "./typings/index.d.ts",
-        "./**/*.ts"
+        "./**/*.ts",
+        "./**/*.tsx"
     ]
 }

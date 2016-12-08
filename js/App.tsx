@@ -34,8 +34,11 @@ class App extends React.Component<IPeopleData, IAppState> {
 function updateHeaderState(columns: string[], currSortCol: string, prevSortCol: string) {
     console.log("now sorting: " + currSortCol + " | previously sorting: " + prevSortCol + "\n");
 
-    sortData(data.people, currSortCol, (currSortCol == prevSortCol));
-    
+    var sorted: IPeople[] = sortData(data.people, currSortCol, (currSortCol == prevSortCol));
+    var renderData: IPeopleData = {
+        people: sorted
+    }
+    render(renderData);
 }
 
 function sortData(data: IPeople[], columnName: string, descending: boolean) {

@@ -2,3 +2,4 @@
 
 import React = __React;
 declare var data;
+declare var render: (data: IPeopleData) => void;

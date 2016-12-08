@@ -5,9 +5,9 @@ class Table extends React.Component<IPeopleData, any> {
     render() {
         let rowHeader = <span>Row Header Placeholder</span>;
         let rows = this.props.people.map(person => {
-            return <div key={person.id}>{person.first_name}</div>;
+            return <Row key={person.id} {...person} />;
         });
-        return <div>
+        return <div className="container">
             <div>
                 {rowHeader}
             </div>

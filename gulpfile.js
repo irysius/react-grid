@@ -5,7 +5,7 @@ var reload = browserSync.reload;
 
 
 gulp.task('compile', function(done) {
-	exec('tsc', (err, stdout, stderr) => {
+	exec('sh ./tsc.sh', (err, stdout, stderr) => {
         console.log(stdout);
         console.log(stderr);
         done(err);

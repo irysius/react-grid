@@ -9,6 +9,7 @@ interface IPeople {
 interface IPeopleData {
     people: IPeople[];
     headers?: string[];
+    pagingData?: IPagerProps;
 }
 interface IAppState {
     headers: string[];
@@ -24,6 +25,7 @@ class App extends React.Component<IPeopleData, IAppState> {
     render() {
         return <div>
             <SearchTextbox />
+            <Pager {...this.props.pagingData} />
             <Table {...this.props} headers={this.state.headers}/>
         </div>;
     }

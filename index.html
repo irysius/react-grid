@@ -19,10 +19,9 @@
                     document.getElementById('mount'));
             }
             
+            let data = { };
             axios.get('./data/simple-rows.json').then(function (response) {
-                let data = {
-                    people: response.data
-                };
+                data.people = response.data;
                 render(data);
             });
             

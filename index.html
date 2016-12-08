@@ -22,18 +22,30 @@
                     AppFactory(data),
                     document.getElementById('mount'));
             }
+            let pageSize = 10;
+            let currentPageIndex = 0;
+            let getPage = pager(pageSize);
+            let peopleData = [];
             
-            let data = { };
+            let filter, sort, paginate;
 
             // On initial load
             axios.get('./data/simple-rows.json').then(function (response) {
-                data.people = response.data;
-                data.pagingData = {
-                    currentPageIndex: 0,
-                    numberOfPages: 10
-                };
-                render(data);
+                peopleData = response.data;
+                refresh();
             });
+
+            function refresh() {
+                let data = {
+                    people: peopleData
+                };
+                
+                data = filter ? filter(data) : data;
+                data = sort ? sort(data) : data;
+                data = paginate ? paginate(data) : data;
+                
+                render(data);
+            }
         </script>
     </body>
 </html>

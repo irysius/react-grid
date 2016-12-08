@@ -11,7 +11,12 @@ class RowHeader extends React.Component<IAppState, IRowHeaderState> {
     }
 
     sort(columnName: string) {
+        // emit sort event to bus
+        updateHeaderState(this.props.headers, columnName, this.state.prevSortColumn);
 
+        this.setState({
+            prevSortColumn: (this.state.prevSortColumn == columnName) ? '' : columnName
+        });
     }
 
     render() {

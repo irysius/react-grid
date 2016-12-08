@@ -5,7 +5,7 @@ interface ISearchTextbox {
 interface ISearchTextboxState {
     searchTerm: string;
 }
-class SearchTextbox extends React.Component<any, ISearchTextboxState> implements ISearchTextbox {
+class SearchTextbox extends React.Component<IAppState, ISearchTextboxState> implements ISearchTextbox {
     constructor(props) {
         super(props);
         this.state = {
@@ -30,6 +30,9 @@ class SearchTextbox extends React.Component<any, ISearchTextboxState> implements
     render() {
         return <div>
             <input type="text" value={this.state.searchTerm} onChange={this.onChange.bind(this)} />
+            <select>
+                <option>id</option>
+            </select>
         </div>;
     }
 }

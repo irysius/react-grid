@@ -24,7 +24,7 @@ class App extends React.Component<IPeopleData, IAppState> {
     }
     render() {
         return <div>
-            <SearchTextbox />
+            <SearchTextbox headers={this.state.headers}/>
             <Pager {...this.props.pagingData} />
             <Table {...this.props} headers={this.state.headers}/>
         </div>;

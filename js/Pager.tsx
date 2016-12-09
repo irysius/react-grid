@@ -113,7 +113,15 @@ export function PagingCalculator(pageSize: number) {
     // index of 0
     return function getPage(data: any[], page: number) {
         if (page < 0) page = 0;
-        if (page > data.length - 1) { page = data.length - 1;}
+        if (page * pageSize > data.length - 1) { page = Math.floor(data.length / pageSize);}
         return subSectionMatch(data, page * pageSize, (page + 1) * pageSize); 
     };
+}
+
+(Pager as any).propTypes = {
+    currentPageIndex: React.PropTypes.number.isRequired,
+    numberOfPages: React.PropTypes.number.isRequired,
+    maxVisiblePages: React.PropTypes.number,
+    setPagination: React.PropTypes.func.isRequired,
+    refresh: React.PropTypes.func.isRequired
 }

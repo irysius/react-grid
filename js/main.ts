@@ -26,6 +26,7 @@ let filter, sort, paginate;
 
 function navigateToPage(pageIndex: number) {
     paginate = function (data: IAppProps) {
+        console.log(data.collection);
         let numberOfPages = Math.ceil(data.collection.length / pageSize * 1.0);
         data.collection = getPage(data.collection, pageIndex);
         data.pagingData = {
@@ -63,7 +64,9 @@ function filterData(data: any[], condition: (p: any) => boolean) {
 }
 function fullStringMatch(searchTerm: string, columnName: string) {
     return function (p: any) {
-        return ('' + p[columnName]).toLowerCase() === searchTerm.toLowerCase();
+        let left = ('' + p[columnName]).toLowerCase();
+        let right = searchTerm.toLowerCase();
+        return left.indexOf(right) !== -1;
     };
 }
 
@@ -94,7 +97,9 @@ function refresh() {
     };
 
     data = filter ? filter(data) : data;
+    console.log(data.collection.length);
     data = sort ? sort(data) : data;
+    console.log(data.collection.length);
     data = paginate ? paginate(data) : data;
     
     render(data);

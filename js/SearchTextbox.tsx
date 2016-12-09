@@ -29,16 +29,20 @@ export class SearchTextbox extends React.Component<ISearchTextboxProps, ISearchT
 
     filterDebounced;
     filter(searchTerm: string) {
-        this.props.setFilter(this.state.searchTerm, this.state.searchColumn);
+        if (this.state.searchTerm === '') {
+            this.props.setFilter('', '');
+        } else {
+            this.props.setFilter(this.state.searchTerm, this.state.searchColumn);
+        }
+        
         this.props.refresh();
     }
 
     clearFilter() {
-        if(!this.state.searchTerm.length) return false;
 
         this.setState({
             searchTerm: '',
-            searchColumn: Object.keys(this.props.columns)[0]
+            searchColumn: Object.keys(this.props.columns).filter(x => x !== 'id')[0]
         });
 
         this.props.setFilter('', '');

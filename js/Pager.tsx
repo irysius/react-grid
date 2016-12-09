@@ -77,7 +77,7 @@ class Pager extends React.Component<IPagerProps, any> {
             }
         });
         console.log(pageSet);
-        let pages = pageSet.map((index) => {
+        let pages = (pageSet || []).map((index) => {
             return <li key={index}
                 className={index === this.props.currentPageIndex ? "active" : null}>
                 <a href="#" onClick={this.goToPage.bind(this, index)}>{index + 1}</a>

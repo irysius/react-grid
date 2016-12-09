@@ -48,9 +48,13 @@ function sortData(data: any[], columnName: string, descending: boolean) {
 }
 
 function updateFilterState(searchTerm: string, searchColumn: string) {
-    filter = function (data: IAppProps) {
-        data.collection = filterData(data.collection, fullStringMatch(searchTerm, searchColumn));
-        return data;
+    if (!searchTerm && !searchColumn) {
+        filter = x => x;
+    } else {
+        filter = function (data: IAppProps) {
+            data.collection = filterData(data.collection, fullStringMatch(searchTerm, searchColumn));
+            return data;
+        }
     }
 }
 
@@ -78,6 +82,7 @@ axios.get('./data/simple-rows.json').then(function (response) {
 });
 
 function refresh() {
+    (<any>window).testData = peopleData;
     let data = {
         collection: peopleData,
         columns: columns,
@@ -87,9 +92,6 @@ function refresh() {
         setFilter: updateFilterState,
         setPagination: navigateToPage
     };
-
-    console.log(filter);
-    console.log(paginate);
 
     data = filter ? filter(data) : data;
     data = sort ? sort(data) : data;

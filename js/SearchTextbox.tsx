@@ -19,7 +19,7 @@ export class SearchTextbox extends React.Component<ISearchTextboxProps, ISearchT
         super(props);
         this.state = {
             searchTerm: '',
-            searchColumn: Object.keys(this.props.columns)[0]
+            searchColumn: Object.keys(this.props.columns).filter(x => x !== 'id')[0]
         };
         // http://stackoverflow.com/questions/23123138/perform-debounce-in-react-js/24679479#24679479
         this.filterDebounced = _.debounce(function () {
@@ -41,8 +41,8 @@ export class SearchTextbox extends React.Component<ISearchTextboxProps, ISearchT
             searchColumn: Object.keys(this.props.columns)[0]
         });
 
-        filter = null;
-        refresh();
+        this.props.setFilter('', '');
+        this.props.refresh();
     }
 
     onChange(event) {
@@ -59,7 +59,7 @@ export class SearchTextbox extends React.Component<ISearchTextboxProps, ISearchT
     }
 
     render() {
-        var options = Object.keys(this.props.columns).map(function(header, index) {
+        var options = Object.keys(this.props.columns).filter(x => x !== 'id').map(function(header, index) {
             return <option key={index}>{header}</option>
         });
 

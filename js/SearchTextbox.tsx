@@ -27,6 +27,8 @@ class SearchTextbox extends React.Component<any, ISearchTextboxState> implements
     }
 
     clearFilter() {
+        if(!this.state.searchTerm.length) return false;
+
         this.setState({
             searchTerm: '',
             searchColumn: ''

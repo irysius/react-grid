@@ -9,12 +9,12 @@ export interface IRowState {
 
 }
 export function Row(props: IRowProps) {
-    let cells = Object.keys(props.columns).map(key => {
+    let cells = Object.keys(props.columns).map((key, index) => {
         let column = props.columns[key];
-        return <div className={column.className}>{props[key]}</div>;
+        return <div key={index} className={column.className}>{props[key]}</div>;
     });
     return (
-        <div classname="row">
+        <div className="row">
             { cells }
         </div>
     );

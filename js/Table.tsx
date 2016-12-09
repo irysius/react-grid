@@ -21,7 +21,7 @@ export class Table extends React.Component<ITableProps, ITableState> {
     render() {
         let rowHeader = <RowHeader {...this.props} />;
         let rows = this.props.collection.map(item => {
-            return <Row key={item.id} {...item} />;
+            return <Row key={item.id} {...item} columns={this.props.columns} />;
         });
         return <div className="container">
             <div>

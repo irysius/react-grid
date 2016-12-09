@@ -24,7 +24,7 @@ export class Pager extends React.Component<IPagerProps, IPagerState> {
             if (this.props.currentPageIndex <= 0) {
                 return <li className="disabled">
                     <a href="#" aria-label="Previous">
-                        <span aria-hidden="true"puys>&laquo;</span>
+                        <span aria-hidden="true">&laquo;</span>
                     </a>
                 </li>;
             } else {

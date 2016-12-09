@@ -47,7 +47,23 @@ function sortData(data: any[], columnName: string, descending: boolean) {
     return _.orderBy(data, columnName, order);
 }
 
-paginate = navigateToPage(0);
+function updateFilterState(searchTerm: string, searchColumn: string) {
+    filter = function (data: IAppProps) {
+        data.collection = filterData(data.collection, fullStringMatch(searchTerm, searchColumn));
+        return data;
+    }
+}
+
+function filterData(data: any[], condition: (p: any) => boolean) {
+    return data.filter(condition);
+}
+function fullStringMatch(searchTerm: string, columnName: string) {
+    return function (p: any) {
+        return ('' + p[columnName]).toLowerCase() === searchTerm.toLowerCase();
+    };
+}
+
+navigateToPage(0);
 
 let pageSize = 10;
 let currentPageIndex = 0;
@@ -68,8 +84,12 @@ function refresh() {
         pagingData: null,
         refresh: refresh,
         setSort: updateHeaderState,
+        setFilter: updateFilterState,
         setPagination: navigateToPage
     };
+
+    console.log(filter);
+    console.log(paginate);
 
     data = filter ? filter(data) : data;
     data = sort ? sort(data) : data;

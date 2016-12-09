@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { SearchTextbox } from './SearchTextbox';
+import { SearchTextbox, ISearchTextboxProps } from './SearchTextbox';
 import { IColumnMap } from './RowHeader';
 import { Pager, IPagerProps } from './Pager';
 import { Table, ITableRecord, ITableProps } from './Table';
 
-export interface IAppProps extends ITableProps {
+export interface IAppProps extends ITableProps, ISearchTextboxProps {
     pagingData: IPagerProps;
     setPagination<T>(pageIndex: number): void;
     refresh(): void;
@@ -18,6 +18,7 @@ export class App extends React.Component<IAppProps, IAppState> {
     }
     render() {
         return <div>
+            <SearchTextbox {...this.props}/>
             <Pager 
                 setPagination={this.props.setPagination} 
                 refresh={this.props.refresh}

@@ -1,77 +1,28 @@
-interface IPeople {
-    id: number;
-    first_name: string;
-    last_name: string;
-    email: string;
-    gender: string;
-    ip_address: string;
+import * as React from 'react';
+import { SearchTextbox } from './SearchTextbox';
+import { IColumnMap } from './RowHeader';
+import { Pager, IPagerProps } from './Pager';
+import { Table, ITableRecord, ITableProps } from './Table';
+
+export interface IAppProps extends ITableProps {
+    pagingData: IPagerProps;
+    setPagination<T>(pageIndex: number): void;
+    refresh(): void;
 }
-interface IPeopleData {
-    people: IPeople[];
-    headers?: string[];
-    pagingData?: IPagerProps
-}
-interface IAppState {
-    headers: string[];
-    pagingData?: IPagerProps;
+export interface IAppState {
 }
 
-class App extends React.Component<IPeopleData, IAppState> {
-    constructor(props: IPeopleData) {
+export class App extends React.Component<IAppProps, IAppState> {
+    constructor(props) {
         super(props);
-        this.state = {
-            headers: Object.keys(props.people[0] || {})
-        };
     }
     render() {
         return <div>
-            <SearchTextbox headers={this.state.headers}/>
-            <Pager {...this.props.pagingData} />
-            <Table {...this.props} headers={this.state.headers}/>
+            <Pager 
+                setPagination={this.props.setPagination} 
+                refresh={this.props.refresh}
+                {...this.props.pagingData} />
+            <Table {...this.props}/>
         </div>;
     }
-}
-
-function updateHeaderState(columns: string[], currSortCol: string, prevSortCol: string) {
-    console.log("now sorting: " + currSortCol + " | previously sorting: " + prevSortCol + "\n");
-
-    return function (data: IPeopleData) {
-        data.people = sortData(data.people, currSortCol, (currSortCol == prevSortCol));
-        return data;
-    };
-}
-
-function updateFilterState(searchTerm: string, searchColumn: string) {
-    return function (data: IPeopleData) {
-        data.people = filterData(data.people, fullStringMatch(searchTerm, searchColumn));
-        return data;
-    }
-}
-
-function sortData(data: IPeople[], columnName: string, descending: boolean) {
-    let order = descending ? 'desc' : 'asc';
-    return _.orderBy(data, columnName, order);
-}
-
-function filterData(data: IPeople[], condition: (p: IPeople) => boolean) {
-    return data.filter(condition);
-}
-
-function fullStringMatch(searchTerm: string, columnName: string) {
-    return function (p: IPeople) {
-        return ('' + p[columnName]).toLowerCase() === searchTerm.toLowerCase();
-    };
-}
-
-function subSectionMatch(data: IPeople[], start: number, end: number) {
-    return data.slice(start, end);
-}
-
-function pager(pageSize: number) {
-    // index of 0
-    return function getPage(data: IPeople[], page: number) {
-        if (page < 0) page = 0;
-        if (page > data.length - 1) { page = data.length - 1;}
-        return subSectionMatch(data, page * pageSize, (page + 1) * pageSize); 
-    };
 }

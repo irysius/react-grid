@@ -1,8 +1,20 @@
-interface IRowHeaderState {
+import * as React from 'react';
+export interface IColumnMap {
+    [name: string]: {
+        className: string;
+        [others: string]: any;
+    }
+}
+export interface IRowHeaderProps {
+    columns: IColumnMap;
+    setSort<T>(columns: IColumnMap, sortColumn: string, prevSortColumn: string): void;
+    refresh(): void;
+}
+export interface IRowHeaderState {
     prevSortColumn: string;
 }
 
-class RowHeader extends React.Component<IAppState, IRowHeaderState> {
+export class RowHeader extends React.Component<IRowHeaderProps, IRowHeaderState> {
     constructor(props) {
         super(props);
         this.state = {
@@ -12,23 +24,22 @@ class RowHeader extends React.Component<IAppState, IRowHeaderState> {
 
     sort(columnName: string) {
         // emit sort event to bus
-        sort = updateHeaderState(this.props.headers, columnName, this.state.prevSortColumn);
-
+        this.props.setSort(this.props.columns, columnName, this.state.prevSortColumn);
         this.setState({
             prevSortColumn: (this.state.prevSortColumn == columnName) ? '' : columnName
         });
-
-        refresh();
+        this.props.refresh();
     }
 
     render() {
-        let classNames = ['col-md-1', 'col-md-2', 'col-md-2', 'col-md-3', 'col-md-1', 'col-md-3'];
-        let headerCells = classNames.map((className, index) => {
-            return <div key={index} className={className} 
-                onClick={this.sort.bind(this, this.props.headers[index])}>
-                {this.props.headers[index]}
-            </div>
+        let headerCells = Object.keys(this.props.columns).map((key, index) => {
+            let column = this.props.columns[key];
+            return <div key={index} className={column.className} 
+                onClick={this.sort.bind(this, key)}>
+                {key}
+            </div>;
         });
+        
         return <div className="row header-row">
             { headerCells }
         </div>

@@ -1,13 +1,21 @@
-interface IPagerProps {
+import * as React from 'react';
+import * as _ from 'lodash';
+export interface IPagerProps {
     currentPageIndex: number;
     numberOfPages: number;
     maxVisiblePages?: number;
+    setPagination?<T>(pageIndex: number): void;
+    refresh?(): void;
 }
 
-class Pager extends React.Component<IPagerProps, any> {
+export interface IPagerState {
+
+}
+
+export class Pager extends React.Component<IPagerProps, IPagerState> {
     goToPage(pageIndex: number) {
-        paginate = navigateToPage(pageIndex);
-        refresh();
+        this.props.setPagination(pageIndex);
+        this.props.refresh();
     }
 
     render() {
@@ -16,7 +24,7 @@ class Pager extends React.Component<IPagerProps, any> {
             if (this.props.currentPageIndex <= 0) {
                 return <li className="disabled">
                     <a href="#" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
+                        <span aria-hidden="true"puys>&laquo;</span>
                     </a>
                 </li>;
             } else {
@@ -76,7 +84,6 @@ class Pager extends React.Component<IPagerProps, any> {
                 return false;
             }
         });
-        console.log(pageSet);
         let pages = (pageSet || []).map((index) => {
             return <li key={index}
                 className={index === this.props.currentPageIndex ? "active" : null}>
@@ -98,14 +105,15 @@ class Pager extends React.Component<IPagerProps, any> {
     }
 }
 
-function navigateToPage(pageIndex: number) {
-    return function (data: IPeopleData) {
-        let numberOfPages = Math.ceil(data.people.length / pageSize * 1.0);
-        data.people = getPage(data.people, pageIndex);
-        data.pagingData = {
-            currentPageIndex: pageIndex,
-            numberOfPages: numberOfPages
-        };
-        return data;
+function subSectionMatch(data: any[], start: number, end: number) {
+    return data.slice(start, end);
+}
+
+export function PagingCalculator(pageSize: number) {
+    // index of 0
+    return function getPage(data: any[], page: number) {
+        if (page < 0) page = 0;
+        if (page > data.length - 1) { page = data.length - 1;}
+        return subSectionMatch(data, page * pageSize, (page + 1) * pageSize); 
     };
 }

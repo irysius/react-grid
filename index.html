@@ -2,50 +2,20 @@
     <head>
         <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="/css/site.css" />
-        <script src="/bower_components/axios/dist/axios.js"></script>
-        <script src="/bower_components/lodash/dist/lodash.js"></script>
-        <script src="/bower_components/react/react.js"></script>
-        <script src="/bower_components/react/react-dom.js"></script>
-        <script src="/js/SearchTextbox.js"></script>
-        <script src="/js/Pager.js"></script>
-        <script src="/js/RowHeader.js"></script>
-        <script src="/js/Row.js"></script>
-        <script src="/js/Table.js"></script>
-        <script src="/js/App.js"></script>
+        <script>
+            var require = {
+                paths: {
+                    axios: '/bower_components/axios/dist/axios',
+                    lodash: '/bower_components/lodash/dist/lodash',
+                    react: '/bower_components/react/react',
+                    'react-dom': '/bower_components/react/react-dom',
+                },
+                urlArgs: new Date().getTime().toString()
+            };
+        </script>
+        <script src="/bower_components/requirejs/require.js" data-main="/js/main.js"></script>
     </head>
     <body>
         <div id="mount"></div>
-        <script>
-            var AppFactory = React.createFactory(App);
-            function render(data) {
-                ReactDOM.render(
-                    AppFactory(data),
-                    document.getElementById('mount'));
-            }
-            let pageSize = 10;
-            let currentPageIndex = 0;
-            let getPage = pager(pageSize);
-            let peopleData = [];
-
-            let filter, sort, paginate = navigateToPage(0);
-
-            // On initial load
-            axios.get('./data/simple-rows.json').then(function (response) {
-                peopleData = response.data;
-                refresh();
-            });
-
-            function refresh() {
-                let data = {
-                    people: peopleData
-                };
-
-                data = filter ? filter(data) : data;
-                data = sort ? sort(data) : data;
-                data = paginate ? paginate(data) : data;
-                
-                render(data);
-            }
-        </script>
     </body>
 </html>

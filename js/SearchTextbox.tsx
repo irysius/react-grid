@@ -26,6 +26,18 @@ class SearchTextbox extends React.Component<any, ISearchTextboxState> implements
         refresh();
     }
 
+    clearFilter() {
+        if(!this.state.searchTerm.length) return false;
+
+        this.setState({
+            searchTerm: '',
+            searchColumn: ''
+        });
+
+        filter = null;
+        refresh();
+    }
+
     onChange(event) {
         this.setState({ 
             searchTerm: event.target.value
@@ -50,6 +62,7 @@ class SearchTextbox extends React.Component<any, ISearchTextboxState> implements
                 {options}
             </select>
             <button onClick={this.filter.bind(this)}>Search</button>
+            <button onClick={this.clearFilter.bind(this)}>Clear</button>
         </div>;
     }
 }
